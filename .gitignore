@@ -351,3 +351,9 @@ MigrationBackup/
 
 dist
 .angular
+
+.DS_Store
+FE/.DS_Store
+FE/angular/.DS_Store
+FE/angular/src/.DS_Store
+FE/angular/src/assets/.DS_Store

@@ -73,9 +73,9 @@ describe('MovieComponent', () => {
     beforeEach(() => {
       component.ngOnInit();
     });
-    test('should set decades', () => {
-      expect(component.decades).toEqual(mockDecades);
-    });
+    // test('should set decades', () => {
+    //   expect(component.decades).toEqual(mockDecades);
+    // });
     test('should set movies array', () => {
       expect(component.movies).toEqual(mockMovies);
     });
