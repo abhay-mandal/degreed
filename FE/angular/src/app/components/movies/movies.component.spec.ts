@@ -72,6 +72,7 @@ describe('MovieComponent', () => {
   describe('ngOnInit', () => {
     beforeEach(() => {
       component.ngOnInit();
+      component.moviesSubscription.subscribe();
     });
     // test('should set decades', () => {
     //   expect(component.decades).toEqual(mockDecades);
@@ -87,6 +88,7 @@ describe('MovieComponent', () => {
     });
     describe('WHEN movies are defined', () => {
       beforeEach(() => {
+        component.moviesSubscription.subscribe();
         component.displayMovies();
       });
       test('should set filteredMovies', () => {
@@ -104,7 +106,6 @@ describe('MovieComponent', () => {
     describe('WHEN movies are undefined', () => {
       test('should set filteredMovies to an empty array', () => {
         component.movies = [];
-        spectator.detectComponentChanges();
         component.displayMovies();
         expect(component.filteredMovies).toEqual([]);
       });
