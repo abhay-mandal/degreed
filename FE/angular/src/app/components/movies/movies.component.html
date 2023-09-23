@@ -6,25 +6,11 @@
     (updateDecade)="displayMovies($event)"
   ></app-decades>
 
-  <ul class="movies" *ngIf="filteredMovies.length">
-    <li *ngFor="let movie of filteredMovies" class="grid grid-bleed">
-      <div class="image col-3"><img [src]="movie.Poster" [alt]="movie.Title" /></div>
-      <div class="content col-9 col-grid">
-        <div class="title text-truncate" [title]="movie.Title">{{ movie.Title }}</div>
-        <ul class="metadata">
-          <li class="rated">
-            <div>{{ movie.Rated }}</div>
-          </li>
-          <li class="runtime">{{ movie.Runtime }}</li>
-          <li class="release">{{ movie.Released }}</li>
-        </ul>
-        <div class="plot">
-          {{ movie.Plot }}
-        </div>
-        <div class="nav flex-footer">
-          <app-go-details [imdbId]="movie.imdbID"></app-go-details>
-        </div>
-      </div>
-    </li>
-  </ul>
+  <ng-container *ngIf="filteredMovies.length">
+    <div class="movies">
+      <ng-container *ngFor="let movie of filteredMovies">
+        <app-movie-card class="grid grid-bleed" [movie]="movie"></app-movie-card>
+      </ng-container>
+    </div>
+  </ng-container>
 </ng-container>
