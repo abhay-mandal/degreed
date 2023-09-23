@@ -1,0 +1,39 @@
+<div class="image col-3"><img [src]="movie.Poster" [alt]="movie.Title" /></div>
+<div class="content col-9 col-grid">
+  <div class="title text-truncate" [title]="movie.Title">{{ movie.Title }}</div>
+  <ul class="metadata">
+    <li class="rated">
+      <div>{{ movie.Rated }}</div>
+    </li>
+    <li class="runtime">{{ movie.Runtime }}</li>
+    <ng-container *ngIf="isMovieDetails">
+      <li class="genre">{{ movie.Genre }}</li>
+    </ng-container>
+    <li class="release">{{ movie.Released }}</li>
+  </ul>
+  <ul *ngIf="isMovieDetails" class="details">
+    <li>
+      <strong>Director:</strong>
+      {{ movie.Director }}
+    </li>
+    <li>
+      <strong>Writer:</strong>
+      {{ movie.Writer }}
+    </li>
+    <li>
+      <strong>Stars:</strong>
+      {{ movie.Actors }}
+    </li>
+  </ul>
+  <div class="plot">
+    {{ movie.Plot }}
+  </div>
+  <div class="nav flex-footer">
+    <ng-container *ngIf="isMovieDetails; else details">
+      <app-go-imdb [imdbId]="movie.imdbID"></app-go-imdb>
+    </ng-container>
+    <ng-template #details>
+      <app-go-details [imdbId]="movie.imdbID"></app-go-details>
+    </ng-template>
+  </div>
+</div>

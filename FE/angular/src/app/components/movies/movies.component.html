@@ -1,28 +1,16 @@
-<app-decades
-  *ngIf="decades.length"
-  [decades]="decades"
-  [currDecade]="currDecade"
-  (updateDecade)="displayMovies($event)"
-></app-decades>
+<ng-container *ngIf="moviesSubscription | async; let movies">
+  <app-decades
+    *ngIf="movies.Decades?.length"
+    [decades]="movies.Decades"
+    [currDecade]="currDecade"
+    (updateDecade)="displayMovies($event)"
+  ></app-decades>
 
-<ul class="movies" *ngIf="filteredMovies.length">
-  <li *ngFor="let movie of filteredMovies" class="grid grid-bleed">
-    <div class="image col-3"><img [src]="movie.Poster" /></div>
-    <div class="content col-9 col-grid">
-      <div class="title">{{ movie.Title }}</div>
-      <ul class="metadata">
-        <li class="rated">
-          <div>{{ movie.Rated }}</div>
-        </li>
-        <li class="runtime">{{ movie.Runtime }}</li>
-        <li class="release">{{ movie.Released }}</li>
-      </ul>
-      <div class="plot">
-        {{ movie.Plot }}
-      </div>
-      <div class="nav flex-footer">
-        <app-go-details [imdbId]="movie.imdbID"></app-go-details>
-      </div>
+  <ng-container *ngIf="filteredMovies.length">
+    <div class="movies">
+      <ng-container *ngFor="let movie of filteredMovies">
+        <app-movie-card class="grid grid-bleed" [movie]="movie"></app-movie-card>
+      </ng-container>
     </div>
-  </li>
-</ul>
+  </ng-container>
+</ng-container>
