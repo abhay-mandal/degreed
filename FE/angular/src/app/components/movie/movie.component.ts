@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, switchMap, tap } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 import { DataService, MovieComplete } from '../../services/data.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class MovieComponent implements OnInit {
   public ngOnInit() {
     this.movieSubscription = this.activatedRoute.params.pipe(
       switchMap(({ id }) => {
-        return this.dataService.getMovie(id);
+        return this.dataService.getMovie(id as string);
       })
     );
   }

@@ -8,5 +8,5 @@ import { MovieComplete } from 'src/app/services/data.service';
 })
 export class MovieCardComponent {
   @Input() movie: MovieComplete = {} as MovieComplete;
-  @Input() isMovieDetails: boolean = false;
+  @Input() isMovieDetails = false;
 }
