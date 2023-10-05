@@ -1,36 +1,38 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, map, mergeMap, switchMap } from 'rxjs';
 import { DataService, MovieComplete, MovieData } from '../../services/data.service';
+
+interface MovieState {
+  selectedDecade: number;
+  decades: number[];
+  filteredMovies: MovieComplete[];
+  allMovies: MovieComplete[];
+}
 
 @Component({
   selector: 'app-movies',
   templateUrl: './movies.component.html'
 })
 export class MoviesComponent implements OnInit {
-  public currDecade: number | undefined;
-  // public decades: number[] = [];
-  public filteredMovies: MovieComplete[] = [];
-  public movies: MovieComplete[] = [];
-  public moviesSubscription: Observable<MovieData> = {} as Observable<MovieData>;
+  public state$: Observable<MovieState> = {} as Observable<MovieState>;
+  public selectedDecade$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
   constructor(private dataService: DataService) {}
 
   public ngOnInit(): void {
-    this.moviesSubscription = this.dataService.getMovies().pipe(
-      tap((data) => {
-        this.movies = data.Search;
-        this.displayMovies();
+    this.state$ = this.selectedDecade$.pipe(
+      switchMap((selectedDecade: number) => {
+        return this.dataService.getMovies().pipe(
+          map((movieData: MovieData): MovieState => {
+            return {
+              allMovies: movieData.Search,
+              selectedDecade: selectedDecade,
+              decades: movieData.Decades,
+              filteredMovies: this.dataService.getFilteredMovies(movieData.Search, selectedDecade)
+            };
+          })
+        );
       })
     );
-  }
-
-  public displayMovies(decade?: number): void {
-    if (!this.movies?.length) {
-      this.filteredMovies = [];
-      return;
-    }
-
-    this.currDecade = decade;
-    this.filteredMovies = this.dataService.getFilteredMovies(this.movies, decade);
   }
 }
