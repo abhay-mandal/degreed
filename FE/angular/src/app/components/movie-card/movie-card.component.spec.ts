@@ -1,39 +1,40 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, tick } from '@angular/core/testing';
 
 import { MovieCardComponent } from './movie-card.component';
 import { GoDetailsComponent } from '../navigation/go-details/go-details.component';
 import { Spectator, createComponentFactory } from '@ngneat/spectator';
+import { GoImdbComponent } from '../navigation/go-imdb/go-imdb.component';
 
 describe('MovieCardComponent', () => {
   let spectator: Spectator<MovieCardComponent>;
   let component: MovieCardComponent;
+  const mockMovies = {
+    Title: 'Mock Movie',
+    Year: 2000,
+    Rated: 'G',
+    Released: '01 Jan 2000',
+    Runtime: '90 min',
+    Genre: 'Mock Genre',
+    Director: 'Director McMock',
+    Writer: 'Writer Mock, Writer Mockerson',
+    Actors: 'Actor McMock, Actor Mockerson',
+    Plot: 'Mock movie plot summary.',
+    Poster:
+      'https://m.media-amazon.com/images/M/MV5BOTY4YjI2N2MtYmFlMC00ZjcyLTg3YjEtMDQyM2ZjYzQ5YWFkXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg',
+    imdbID: 'tt123',
+    Type: 'movie'
+  };
+
   const createComponent = createComponentFactory({
     component: MovieCardComponent,
     imports: [],
-    declarations: [],
+    declarations: [GoImdbComponent, GoDetailsComponent],
     providers: [],
     shallow: true,
     detectChanges: false
   });
 
   beforeEach(() => {
-    const mockMovies = {
-      Title: 'Mock Movie',
-      Year: 2000,
-      Rated: 'G',
-      Released: '01 Jan 2000',
-      Runtime: '90 min',
-      Genre: 'Mock Genre',
-      Director: 'Director McMock',
-      Writer: 'Writer Mock, Writer Mockerson',
-      Actors: 'Actor McMock, Actor Mockerson',
-      Plot: 'Mock movie plot summary.',
-      Poster:
-        'https://m.media-amazon.com/images/M/MV5BOTY4YjI2N2MtYmFlMC00ZjcyLTg3YjEtMDQyM2ZjYzQ5YWFkXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg',
-      imdbID: 'tt123',
-      Type: 'movie'
-    };
-
     spectator = createComponent({
       props: {
         movie: mockMovies,
@@ -47,8 +48,10 @@ describe('MovieCardComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  test('should set movie Year to "2000"', () => {
-    expect(component.movie.Year).toBe(2000);
+  test('should set movie Title to "Mock Movie"', () => {
+    spectator.detectChanges();
+    const element = spectator.query('.title');
+    expect(element?.textContent).toContain(mockMovies.Title);
   });
 
   test('should set isMovieDetails to false', () => {

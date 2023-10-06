@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable, map, mergeMap, switchMap } from 'rxjs';
-import { DataService, MovieComplete, MovieData } from '../../services/data.service';
+import { BehaviorSubject, Observable, combineLatest, map } from 'rxjs';
+import { DataService, MovieComplete } from '../../services/data.service';
 
 interface MovieState {
   selectedDecade: number;
@@ -20,18 +20,14 @@ export class MoviesComponent implements OnInit {
   constructor(private dataService: DataService) {}
 
   public ngOnInit(): void {
-    this.state$ = this.selectedDecade$.pipe(
-      switchMap((selectedDecade: number) => {
-        return this.dataService.getMovies().pipe(
-          map((movieData: MovieData): MovieState => {
-            return {
-              allMovies: movieData.Search,
-              selectedDecade: selectedDecade,
-              decades: movieData.Decades,
-              filteredMovies: this.dataService.getFilteredMovies(movieData.Search, selectedDecade)
-            };
-          })
-        );
+    this.state$ = combineLatest([this.dataService.getMovies(), this.selectedDecade$]).pipe(
+      map(([movieData, selectedDecade]) => {
+        return {
+          allMovies: movieData.Search,
+          selectedDecade: selectedDecade,
+          decades: movieData.Decades,
+          filteredMovies: this.dataService.getFilteredMovies(movieData.Search, selectedDecade)
+        };
       })
     );
   }
