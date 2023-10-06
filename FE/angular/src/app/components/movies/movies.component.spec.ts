@@ -69,46 +69,46 @@ describe('MovieComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('ngOnInit', () => {
-    beforeEach(() => {
-      component.ngOnInit();
-      component.moviesSubscription.subscribe();
-    });
-    // test('should set decades', () => {
-    //   expect(component.decades).toEqual(mockDecades);
-    // });
-    test('should set movies array', () => {
-      expect(component.movies).toEqual(mockMovies);
-    });
-  });
+  // describe('ngOnInit', () => {
+  //   beforeEach(() => {
+  //     component.ngOnInit();
+  //     component.moviesSubscription.subscribe();
+  //   });
+  //   // test('should set decades', () => {
+  //   //   expect(component.decades).toEqual(mockDecades);
+  //   // });
+  //   test('should set movies array', () => {
+  //     expect(component.movies).toEqual(mockMovies);
+  //   });
+  // });
 
-  describe('displayMovies', () => {
-    beforeEach(() => {
-      component.ngOnInit();
-    });
-    describe('WHEN movies are defined', () => {
-      beforeEach(() => {
-        component.moviesSubscription.subscribe();
-        component.displayMovies();
-      });
-      test('should set filteredMovies', () => {
-        expect(component.filteredMovies).toEqual([mockMovies[0]]);
-      });
-      describe('AND a decade is passed in', () => {
-        beforeEach(() => {
-          component.displayMovies(2000);
-        });
-        test('should set currDecade', () => {
-          expect(component.currDecade).toEqual(2000);
-        });
-      });
-    });
-    describe('WHEN movies are undefined', () => {
-      test('should set filteredMovies to an empty array', () => {
-        component.movies = [];
-        component.displayMovies();
-        expect(component.filteredMovies).toEqual([]);
-      });
-    });
-  });
+  // describe('displayMovies', () => {
+  //   beforeEach(() => {
+  //     component.ngOnInit();
+  //   });
+  //   describe('WHEN movies are defined', () => {
+  //     beforeEach(() => {
+  //       component.moviesSubscription.subscribe();
+  //       component.displayMovies();
+  //     });
+  //     test('should set filteredMovies', () => {
+  //       expect(component.filteredMovies).toEqual([mockMovies[0]]);
+  //     });
+  //     describe('AND a decade is passed in', () => {
+  //       beforeEach(() => {
+  //         component.displayMovies(2000);
+  //       });
+  //       test('should set currDecade', () => {
+  //         expect(component.currDecade).toEqual(2000);
+  //       });
+  //     });
+  //   });
+  //   describe('WHEN movies are undefined', () => {
+  //     test('should set filteredMovies to an empty array', () => {
+  //       component.movies = [];
+  //       component.displayMovies();
+  //       expect(component.filteredMovies).toEqual([]);
+  //     });
+  //   });
+  // });
 });

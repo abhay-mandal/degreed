@@ -1,16 +1,12 @@
-<ng-container *ngIf="moviesSubscription | async; let movies">
+<ng-container *ngIf="state$ | async; let state">
   <app-decades
-    *ngIf="movies.Decades?.length"
-    [decades]="movies.Decades"
-    [currDecade]="currDecade"
-    (updateDecade)="displayMovies($event)"
+    *ngIf="state.decades?.length"
+    [decades]="state.decades"
+    [currDecade]="state.selectedDecade"
+    (updateDecade)="selectedDecade$.next($event)"
   ></app-decades>
 
-  <ng-container *ngIf="filteredMovies.length">
-    <div class="movies">
-      <ng-container *ngFor="let movie of filteredMovies">
-        <app-movie-card class="grid grid-bleed" [movie]="movie"></app-movie-card>
-      </ng-container>
-    </div>
-  </ng-container>
+  <div *ngIf="state.filteredMovies.length" class="movies">
+    <app-movie-card *ngFor="let movie of state.filteredMovies" class="grid grid-bleed" [movie]="movie"></app-movie-card>
+  </div>
 </ng-container>

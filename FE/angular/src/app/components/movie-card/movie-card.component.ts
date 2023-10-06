@@ -9,4 +9,9 @@ import { MovieComplete } from 'src/app/services/data.service';
 export class MovieCardComponent {
   @Input() movie: MovieComplete = {} as MovieComplete;
   @Input() isMovieDetails = false;
+
+  onImgLoadError(event: any) {
+    event.target.src =
+      './assets/images/MV5BMGQ5YTM1NmMtYmIxYy00N2VmLWJhZTYtN2EwYTY3MWFhOTczXkEyXkFqcGdeQXVyNTA2NTI0MTY@._V1_SX300.jpg';
+  }
 }
